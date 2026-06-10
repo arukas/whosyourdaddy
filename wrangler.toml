@@ -1,0 +1,19 @@
+name = "whosyourdaddy"
+main = "src/index.js"
+compatibility_date = "2026-06-10"
+
+[observability.logs]
+enabled = true
+
+[triggers]
+crons = ["*/5 * * * *"]
+
+[vars]
+ZAI_BASE_URL = "https://api.z.ai/api/anthropic"
+ZAI_TIMEZONE = "Asia/Singapore"
+CACHE_STALE_AFTER_SECONDS = "900"
+
+[[kv_namespaces]]
+binding = "USAGE_CACHE"
+id = "1cb6fcf6f01a4cf18f16c20645a4b048"
+preview_id = "1cb6fcf6f01a4cf18f16c20645a4b048"

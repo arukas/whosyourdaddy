@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>whosyourdaddy</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f7ead2;
+        --paper: rgba(255, 249, 237, 0.94);
+        --paper-strong: #fffaf0;
+        --ink: #26150f;
+        --muted: #7e5d42;
+        --line: rgba(122, 78, 38, 0.2);
+        --gold: #c79a3b;
+        --gold-deep: #8b6222;
+        --scarlet: #8f1d1d;
+        --accent: #ae1f24;
+        --warn: #b16800;
+        --danger: #8b0f12;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Baskerville", "Times New Roman", "Songti SC", "STSong", serif;
+        background:
+          radial-gradient(circle at top, rgba(255, 235, 184, 0.55), transparent 32%),
+          linear-gradient(180deg, #7f1718 0%, #b3382f 16%, #edd7ab 16.1%, var(--bg) 100%);
+        color: var(--ink);
+      }
+      main {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 32px 20px 56px;
+      }
+      .hero, .panel {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        box-shadow:
+          0 22px 48px rgba(71, 28, 18, 0.12),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+        backdrop-filter: blur(8px);
+      }
+      .hero {
+        position: relative;
+        overflow: hidden;
+        padding: 30px 30px 28px;
+        margin-bottom: 20px;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 10px;
+        border: 1px solid rgba(199, 154, 59, 0.38);
+        border-radius: 16px;
+        pointer-events: none;
+      }
+      .hero-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 12px;
+      }
+      .eyebrow {
+        margin: 0;
+        font-size: 0.86rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--gold-deep);
+      }
+      .seal {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 52px;
+        height: 52px;
+        border-radius: 999px;
+        background:
+          radial-gradient(circle at 30% 30%, #db4a40 0%, var(--scarlet) 70%);
+        color: #fff5ea;
+        font-size: 1.25rem;
+        font-weight: 700;
+        box-shadow: inset 0 0 0 2px rgba(255, 214, 170, 0.28);
+      }
+      .hero h1 {
+        margin: 0 0 10px;
+        font-size: clamp(2.3rem, 5vw, 4.5rem);
+        line-height: 0.95;
+        letter-spacing: 0.02em;
+      }
+      .hero p {
+        margin: 0;
+        color: var(--muted);
+        max-width: 720px;
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+      .panel {
+        padding: 20px 18px;
+      }
+      .kicker {
+        margin: 0 0 10px;
+        font-size: 0.8rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .big {
+        font-size: 1.95rem;
+        margin: 0;
+        line-height: 1.2;
+      }
+      .meta {
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.45;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th, td {
+        text-align: left;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(122, 78, 38, 0.18);
+        font-size: 0.95rem;
+      }
+      th { color: var(--muted); font-weight: 600; }
+      .status-fresh { color: var(--accent); }
+      .status-stale { color: var(--warn); }
+      .status-error { color: var(--danger); }
+      .note {
+        margin-top: 20px;
+        padding: 16px 18px;
+        border-radius: 18px;
+        background: linear-gradient(135deg, rgba(143, 29, 29, 0.08), rgba(199, 154, 59, 0.14));
+        border: 1px solid rgba(143, 29, 29, 0.12);
+        color: #6e402b;
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+      @media (max-width: 680px) {
+        main {
+          padding: 20px 14px 38px;
+        }
+        .hero {
+          padding: 22px 18px;
+        }
+        .hero-top {
+          align-items: flex-start;
+        }
+        .seal {
+          width: 44px;
+          height: 44px;
+          font-size: 1.05rem;
+        }
+        .big {
+          font-size: 1.75rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="hero">
+        <div class="hero-top">
+          <p class="eyebrow">御前赏册</p>
+          <span class="seal">敕</span>
+        </div>
+        <h1>MAKE BI GREATE AGAIN</h1>
+        <p>皇恩既下，百臣分赏。此卷只读天家库藏，每五分钟重录一次封赏用量，不使群臣频频惊扰上游。承熙六年钦此。</p>
+      </section>
+
+      <section class="grid">
+        <article class="panel">
+          <p class="kicker">圣眷状态</p>
+          <p class="big status-fresh" id="status">fresh</p>
+          <p class="meta" id="status-meta"></p>
+        </article>
+        <article class="panel">
+          <p class="kicker">御前平台</p>
+          <p class="big" id="platform">-</p>
+          <p class="meta" id="query-time"></p>
+        </article>
+        <article class="panel">
+          <p class="kicker">册封时辰</p>
+          <p class="big" id="window">-</p>
+          <p class="meta" id="window-meta"></p>
+        </article>
+      </section>
+
+      <section class="panel" style="margin-bottom: 20px;">
+        <p class="kicker">恩赏额度</p>
+        <table>
+          <thead>
+            <tr><th>Type</th><th>Usage</th><th>Percent</th></tr>
+          </thead>
+          <tbody id="quota-body"></tbody>
+        </table>
+      </section>
+
+      <section class="grid">
+        <article class="panel">
+          <p class="kicker">受赏模型</p>
+          <table>
+            <thead>
+              <tr><th>Model</th><th>Calls</th><th>Tokens</th></tr>
+            </thead>
+            <tbody id="models-body"></tbody>
+          </table>
+        </article>
+        <article class="panel">
+          <p class="kicker">奉旨器具</p>
+          <table>
+            <thead>
+              <tr><th>Tool</th><th>Calls</th><th>MCP</th></tr>
+            </thead>
+            <tbody id="tools-body"></tbody>
+          </table>
+        </article>
+      </section>
+
+      <section class="note">
+        此页只呈缓存抄本。若卷宗稍旧，Worker 会在后台续写新诏，前台仍先奉上最近一次可读的赏册。
+      </section>
+    </main>
+
+    <script>
+      const mockPayload = {
+        status: "fresh",
+        cache: {
+          key: "usage:latest",
+          refreshed_at: "2026-06-10T09:55:00.000Z",
+          age_seconds: 42,
+          stale_after_seconds: 900
+        },
+        last_error: null,
+        data: {
+          source: "scheduled",
+          platform: "ZAI",
+          query_time: "2026-06-10 09:55:00",
+          time_range: {
+            start: "2026-06-09 09:55:00",
+            end: "2026-06-10 09:55:00"
+          },
+          refreshed_at: "2026-06-10T09:55:00.000Z",
+          model_usage: [
+            { modelName: "glm-4.5", callCount: 128, totalTokens: 1843200 },
+            { modelName: "glm-4.5-air", callCount: 84, totalTokens: 642000 },
+            { modelName: "claude-sonnet-4", callCount: 27, totalTokens: 315800 }
+          ],
+          tool_usage: [
+            { toolName: "web_search", count: 62, mcpUsage: 62 },
+            { toolName: "browser", count: 31, mcpUsage: 31 },
+            { toolName: "code_execution", count: 14, mcpUsage: 14 }
+          ],
+          quota_limit: {
+            limits: [
+              {
+                type: "Token usage (5 Hour)",
+                percentage: 37,
+                currentValue: 1843200,
+                limit: 5000000
+              },
+              {
+                type: "MCP usage (1 Month)",
+                percentage: 58,
+                currentUsage: 487,
+                total: 840
+              }
+            ]
+          }
+        }
+      };
+
+      const byId = (id) => document.getElementById(id);
+
+      function toChineseEraYear(year) {
+        const eraMap = {
+          2021: '承熙元年', 2022: '承熙二年', 2023: '承熙三年',
+          2024: '承熙四年', 2025: '承熙五年', 2026: '承熙六年',
+          2027: '承熙七年', 2028: '承熙八年', 2029: '承熙九年',
+          2030: '承熙十年'
+        };
+        return eraMap[year] || year + '年';
+      }
+
+      function toChineseEraKe(hour, minute) {
+        var shiNames = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+        var shiIdx = Math.floor(((hour + 1) % 24) / 2);
+        var offsetMin = ((hour - (shiIdx * 2 - 1 + 24) % 24 + 24) % 24) * 60 + minute;
+        var keIdx = Math.floor(offsetMin / 15);
+        var ban = keIdx < 4 ? '初' : '正';
+        var ke = keIdx % 4;
+        var keNames = ['初刻','一刻','二刻','三刻'];
+        return shiNames[shiIdx] + '时' + ban + keNames[ke];
+      }
+
+      function toChineseEraDate(isoOrTimestamp) {
+        var d = new Date(isoOrTimestamp);
+        if (isNaN(d.getTime())) return isoOrTimestamp || '-';
+        var y = d.getFullYear();
+        var m = d.getMonth() + 1;
+        var day = d.getDate();
+        var monthNames = ['', '正月','二月','三月','四月','五月','六月','七月','八月','九月','十月','冬月','腊月'];
+        return toChineseEraYear(y) + monthNames[m] + day + '日 ' + toChineseEraKe(d.getHours(), d.getMinutes());
+      }
+
+      function toChineseEraDatetime(s) {
+        if (!s) return '-';
+        var m = s.match(/(\d{4})-(\d{2})-(\d{2})\s+(\d{2}):(\d{2})/);
+        if (!m) return s;
+        var year = parseInt(m[1], 10);
+        var mon = parseInt(m[2], 10);
+        var day = parseInt(m[3], 10);
+        var hour = parseInt(m[4], 10);
+        var min = parseInt(m[5], 10);
+        var monthNames = ['', '正月','二月','三月','四月','五月','六月','七月','八月','九月','十月','冬月','腊月'];
+        return toChineseEraYear(year) + (monthNames[mon] || m[2] + '月') + day + '日 ' + toChineseEraKe(hour, min);
+      }
+
+      const renderRows = (target, rows, columns) => {
+        target.innerHTML = rows.length
+          ? rows.map((row) => "<tr>" + columns.map((column) => "<td>" + (row[column] ?? "-") + "</td>").join("") + "</tr>").join("")
+          : "<tr><td colspan='" + columns.length + "'>No data</td></tr>";
+      };
+
+      function normalizeQuotaRows(quotaLimit) {
+        const limits = Array.isArray(quotaLimit?.limits) ? quotaLimit.limits : [];
+        return limits.map((item) => ({
+          type: translateQuotaType(item.type),
+          usage: formatQuotaUsage(item),
+          percentage: item.percentage != null ? item.percentage + "%" : "-"
+        }));
+      }
+
+      function normalizeModelRows(modelUsage) {
+        return (Array.isArray(modelUsage) ? modelUsage : []).map((item) => ({
+          name: item.name || item.modelName || item.model || "-",
+          callCount: item.callCount ?? item.count ?? "-",
+          totalTokens: item.totalTokens ?? item.tokens ?? "-"
+        }));
+      }
+
+      function normalizeToolRows(toolUsage) {
+        return (Array.isArray(toolUsage) ? toolUsage : []).map((item) => ({
+          name: item.name || item.toolName || item.tool || "-",
+          count: item.count ?? item.callCount ?? "-",
+          mcpUsage: item.mcpUsage ?? item.usage ?? "-"
+        }));
+      }
+
+      function formatQuotaUsage(item) {
+        if (item.currentUsage != null && item.total != null) {
+          return item.currentUsage + " / " + item.total;
+        }
+        if (item.currentValue != null && item.limit != null) {
+          return item.currentValue + " / " + item.limit;
+        }
+        return "-";
+      }
+
+      function render(payload) {
+        const snapshot = payload.data;
+        byId("status").textContent = displayStatusText(payload.status);
+        byId("status").className = payload.status === "fresh" ? "big status-fresh" : "big status-stale";
+        byId("status-meta").textContent = "上次颁诏 " + toChineseEraDate(payload.cache.refreshed_at) + " · 卷龄 " + payload.cache.age_seconds + "s";
+        byId("platform").textContent = snapshot.platform || "-";
+        byId("query-time").textContent = "记档时刻：" + toChineseEraDatetime(snapshot.query_time);
+        byId("window").innerHTML = toChineseEraDatetime(snapshot.time_range.start) + " →<br>" + toChineseEraDatetime(snapshot.time_range.end);
+        byId("window-meta").textContent = payload.last_error ? "上次宣旨受阻：" + payload.last_error.message : "近旨通达，上游安稳";
+
+        renderRows(byId("quota-body"), normalizeQuotaRows(snapshot.quota_limit), ["type", "usage", "percentage"]);
+        renderRows(byId("models-body"), normalizeModelRows(snapshot.model_usage), ["name", "callCount", "totalTokens"]);
+        renderRows(byId("tools-body"), normalizeToolRows(snapshot.tool_usage), ["name", "count", "mcpUsage"]);
+      }
+
+      function displayStatusText(status) {
+        if (status === "fresh") return "圣眷正隆";
+        if (status === "stale") return "旧诏可阅";
+        return "天听未达";
+      }
+
+      function translateQuotaType(type) {
+        if (type === "Token usage (5 Hour)") return "两个半时辰 token 赏额";
+        if (type === "MCP usage (1 Month)") return "一月 MCP 恩赏";
+        return type || "-";
+      }
+
+      render(mockPayload);
+    </script>
+  </body>
+</html>
